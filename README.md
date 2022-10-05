@@ -9,7 +9,6 @@ This project aims to compare tools that analyze differential expression of RNA s
 Synthetic count matrices were generated and provided for the comparison which included two conditional groups, condition 1 and condition 2, with varying sample sizes from 3 to 9 per group and approximately ten thousand genes. 
 A separate meta file was also provided that indicates whether condition 2 genes were either upregulated, downregulated or differentially expressed compared to condition 1.
 
-
 Method
 
 The differential expression tools we will investigate in this study include DESeq2, EdgeR and Voom limma. 
@@ -19,7 +18,6 @@ To compare the ability to rank differentially expressed genes, we will generate 
 RNA differential expression tools are built in the R language (version 4.2.1) and scripts were written in RStudio (version 2022.07.1 build 554). Results from these tools were analysed in Jupyter notebook (version 5.7.8)running Python version 3.7.3). 
 A logistic regression was trained using the output of the differential expression tool as the response variable and a meta data file as the predictor variable. Genes with a statistically significant fold change of p value=0.05 or smaller were considered differentially expressed.
 
- 
 Results
 
 ![alt text](/Picture500_500.png?raw=true)
