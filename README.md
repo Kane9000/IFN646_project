@@ -21,9 +21,9 @@ A logistic regression was trained using the output of the differential expressio
  
 Results
 
-![alt text](https://github.com/Kane9000/IFN646_project/Picture500_500.png?raw=true)
-![alt text](https://github.com/Kane9000/IFN646_project/Picture750_250.png?raw=true)
-![alt text](https://github.com/Kane9000/IFN646_project/Picture1000_0.png?raw=true)
+![alt text](https://github.com/Kane9000/IFN646_project/Picture500_500.png)
+![alt text](https://github.com/Kane9000/IFN646_project/Picture750_250.png)
+![alt text](https://github.com/Kane9000/IFN646_project/Picture1000_0.png)
  
 Area under the ROC curve (AUC). Area under the ROC curve for DESeq2 and EdgeR using synthetic count data.
 Each file name indicates the number of genes that are upregulated and downregulated compared to in condition 2 compared to condition 1. 
