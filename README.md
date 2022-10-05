@@ -16,7 +16,8 @@ The tools will be evaluated based on their ability to determine whether genes we
 
 To compare the ability to rank differentially expressed genes, we will generate receiver operating characteristic (ROC) graphs which plot true positive and false positive rates and evaluate each area under ROC curve (AUC) which calculates the performance of the model across all probability thresholds.
 RNA differential expression tools are built in the R language (version 4.2.1) and scripts were written in RStudio (version 2022.07.1 build 554). Results from these tools were analysed in Jupyter notebook (version 5.7.8)running Python version 3.7.3). 
-A logistic regression was trained using the output of the differential expression tool as the response variable and a meta data file as the predictor variable. Genes with a statistically significant fold change of p value=0.05 or smaller were considered differentially expressed.
+A logistic regression was trained using the output of the differential expression tool as the response variable and a meta data file as the predictor variable. 
+Genes with a statistically significant fold change of p value=0.05 or smaller were considered differentially expressed.
 
 Results
 

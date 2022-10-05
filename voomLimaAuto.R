@@ -1,10 +1,14 @@
-## Gene-level differential expression analysis using EdgeR
+################################################################################
+###Gene-level differential expression analysis using VoomLimma
 ################################################################################
 #Input: synthetic data stored in folder "data" in current working directory
 #Output: xlsx file for each synthetic data in current working directory
 
-library(edgeR)
 library(writexl)
+library(limma)
+library(edgeR)
+#.libPaths()
+#BiocManager::install(c("limma", "glimma"), lib = "C:/Users/khang/AppData/Local/R/win-library/4.2")
 
 output_file_list <- list(
   ('3_500_500.xlsx'),
@@ -42,59 +46,50 @@ input_data_list <- list(
 )
 
 func <- function(input_data, input_group, output_file){
-  ####################################
-  ####Import data
-  ####################################
+  #################################
+  ###Input declaration and Preprocessing
+  #################################
   data <- read.table(input_data, header=T, row.names=1)
-  dataGroups = input_group
+  D <- input_group
   
-  #create DGEList
-  d <- DGEList(counts=data,group=factor(dataGroups))
+  #explore plot data
+  #plotMDS(data, col = as.numeric(D))
   
-  ####################################
-  ####Normalizing the data
-  ####################################
-  d <- calcNormFactors(d, method="TMM")
+  #Create DGEList object
+  d0 <- DGEList(data)
   
+  #Calculate normalization factors
+  d0 <- calcNormFactors(d0)
   
-  ####################################
-  ####Set up model
-  ####################################
-  #Design matrix
-  design.mat <- model.matrix(~ 0 + d$samples$group)
-  colnames(design.mat) <- levels(d$samples$group)
+  #################################
+  ###Voom transformation and calculation of variance weights
+  #################################
+  #Specify model. Voom uses variances of the model residuals (observed - fitted)
+  mm <- model.matrix(~0 + D)
   
-  design.mat
-  ####################################
-  ###GLM estimates of dispersion
-  ####################################
+  #Run Voom
+  y <- voom(d0, mm, plot = T)
   
-  #estimate common and tagwise dispersion
-  #d1 <- estimateDisp(d)
-  
-  d2 <- estimateGLMCommonDisp(d,design.mat)
-  d2 <- estimateGLMTrendedDisp(d2,design.mat, method="power")
-  d2 <- estimateGLMTagwiseDisp(d2,design.mat)
-  # You can change method to "auto", "bin.spline", "power", "spline", "bin.loess".
-  # The default is "auto" which chooses "bin.spline" when > 200 tags and "power" otherwise.
-  
-  
-  ####################################
-  ###Differential Expression
-  ####################################
-  # tagwise tests using the exact negative binomial test
-  # compare groups 1 and 2
-  et12 <- exactTest(d2, pair=c(1,2))
-  
-  #most significant genes
-  #topTags(et12)
-  
-  et12 <- data.frame(et12)
-  write_xlsx(et12, output_file)
+  #################################
+  ###Fitting linear models in limma
+  #################################
+  #lmFit fits a linear model using weighted least squares for each gene
+  fit <- lmFit(y, mm)
+  #head(coef(fit))
+  contr <- makeContrasts(Dcondition2 - Dcondition1, levels = colnames(coef(fit)))
+  tmp <- contrasts.fit(fit, contr)
+  tmp <- eBayes(tmp)
+  results = data.frame(tmp)
+  write_xlsx(results, output_file)
 }
+
 for (i in 1:9){
   func(input_data_list[[i]],input_group_list[[i]],output_file_list[[i]])
 }
+
+
+
+
 
 
 

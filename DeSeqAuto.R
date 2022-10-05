@@ -1,5 +1,10 @@
-## Gene-level differential expression analysis using DESeq2
+################################################################################
+###Gene-level differential expression analysis using DESeq2
+################################################################################
+#Input: synthetic data stored in folder "data" in current working directory
+#Output: xlsx file for each synthetic data in current working directory
 
+########################################
 ## Setup - Loading libraries
 ########################################
 #For excel output
