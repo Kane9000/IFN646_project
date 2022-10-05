@@ -11,6 +11,7 @@ A separate meta file was also provided that indicates whether condition 2 genes 
 
 
 Method
+
 The differential expression tools we will investigate in this study include DESeq2, EdgeR and Voom limma. 
 The tools will be evaluated based on their ability to determine whether genes were differential expressed or not as indicated in the meta file. 
 
@@ -29,4 +30,6 @@ Area under the ROC curve (AUC). Area under the ROC curve for DESeq2 and EdgeR us
 Each file name indicates the number of genes that are upregulated and downregulated compared to in condition 2 compared to condition 1. 
 Sample size varies from n = 3, 6 or 9 per group.
 Each point represents an AUC score that has been generated from either DESeq2 (circle), EdgeR (square) or VoomLimma (Diamond).
-AUC score was increased in all scenarios when the sample size was increased.
+
+AUC score was increased in all scenarios when the sample size was increased. DESeq2 has a slight advantage over EdgeR in most scenarios. EdgeR ranks lowest at low samples sizes and increases AUC score in higher samples sizes with similar scores or sometimes better than to DESeq2. VoomLimma has a slightly better AUC score than EdgeR at lower sample sizes and this advantage is diminished at higher sample size.
+
