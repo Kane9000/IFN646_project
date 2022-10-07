@@ -79,7 +79,8 @@ func <- function(input_data, input_group, output_file){
   contr <- makeContrasts(Dcondition2 - Dcondition1, levels = colnames(coef(fit)))
   tmp <- contrasts.fit(fit, contr)
   tmp <- eBayes(tmp)
-  results = data.frame(tmp)
+  #results = data.frame(tmp)
+  results <- topTable(tmp, number=10000, coef=1, sort.by="none")
   write_xlsx(results, output_file)
 }
 
