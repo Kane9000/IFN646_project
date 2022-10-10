@@ -40,7 +40,7 @@ RNA differential expression tools are built in the R language (version 4.2.1) an
 
 ## Results
 
-###Precision-Recall F-measure score
+Precision-Recall F-measure score
 
 ![alt text](/PR_500_500_padj.png?raw=true)
 ![alt text](/PR_750_250_padj.png?raw=true)
