@@ -1,10 +1,15 @@
+################################################################################
 ## Gene-level differential expression analysis using EdgeR
 ################################################################################
 #Input: synthetic data stored in folder "data" in current working directory
 #Output: xlsx file for each synthetic data in current working directory
 
+########################################
+## Setup - Loading libraries
+########################################
 library(edgeR)
 library(writexl)
+
 
 output_file_list <- list(
   ('3_500_500.xlsx'),
@@ -43,53 +48,45 @@ input_data_list <- list(
 
 func <- function(input_data, input_group, output_file){
   ####################################
-  ####Import data
+  ####Import data and Preprocessing
   ####################################
   data <- read.table(input_data, header=T, row.names=1)
   dataGroups = input_group
   
-  #create DGEList
+  ####################################
+  ###create DGEList
+  ####################################
   d <- DGEList(counts=data,group=factor(dataGroups))
   
   ####################################
   ####Normalizing the data
   ####################################
-  d <- calcNormFactors(d, method="TMM")
-  
+  d <- calcNormFactors(d)
   
   ####################################
-  ####Set up model
+  ###Set up Design matrix
   ####################################
-  #Design matrix
   design.mat <- model.matrix(~ 0 + d$samples$group)
   colnames(design.mat) <- levels(d$samples$group)
   
-  design.mat
   ####################################
-  ###GLM estimates of dispersion
+  ###Estimates of dispersion
   ####################################
-  
   #estimate common and tagwise dispersion
-  #d1 <- estimateDisp(d)
-  
-  d2 <- estimateGLMCommonDisp(d,design.mat)
-  d2 <- estimateGLMTrendedDisp(d2,design.mat, method="power")
-  d2 <- estimateGLMTagwiseDisp(d2,design.mat)
-  # You can change method to "auto", "bin.spline", "power", "spline", "bin.loess".
-  # The default is "auto" which chooses "bin.spline" when > 200 tags and "power" otherwise.
-  
+  d1 <- estimateDisp(d, design.mat)
   
   ####################################
   ###Differential Expression
   ####################################
-  # tagwise tests using the exact negative binomial test
   # compare groups 1 and 2
   et12 <- exactTest(d2, pair=c(1,2))
-  
-  #most significant genes
-  #topTags(et12)
-  
-  et12 <- data.frame(et12)
+  #add adjusted p value
+  results <- topTags(et12, n = 10000, adjust.method = "BH", sort.by = "none", p.value = 1)
+
+  ####################################
+  ###Output xlsx
+  ####################################
+  results <- data.frame(results)
   write_xlsx(et12, output_file)
 }
 for (i in 1:9){
