@@ -9,7 +9,7 @@
 ########################################
 library(edgeR)
 library(writexl)
-
+library(tictoc)
 
 output_file_list <- list(
   ('3_500_500.xlsx'),
@@ -79,19 +79,21 @@ func <- function(input_data, input_group, output_file){
   ###Differential Expression
   ####################################
   # compare groups 1 and 2
-  et12 <- exactTest(d2, pair=c(1,2))
+  et12 <- exactTest(d1, pair=c(1,2))
   #add adjusted p value
-  results <- topTags(et12, n = 10000, adjust.method = "BH", sort.by = "none", p.value = 1)
+  results <- topTags(et12, n = 'inf', adjust.method = "BH", sort.by = "none", p.value = 1)
 
   ####################################
   ###Output xlsx
   ####################################
   results <- data.frame(results)
-  write_xlsx(et12, output_file)
+  write_xlsx(results, output_file)
 }
+tic()
 for (i in 1:9){
   func(input_data_list[[i]],input_group_list[[i]],output_file_list[[i]])
 }
+toc()
 
 
 

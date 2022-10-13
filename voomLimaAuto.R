@@ -10,6 +10,7 @@
 library(writexl)
 library(limma)
 library(edgeR)
+library(tictoc)
 
 
 output_file_list <- list(
@@ -76,16 +77,18 @@ func <- function(input_data, input_group, output_file){
   ###Fitting linear models in limma
   #################################
   #lmFit fits a linear model using weighted least squares for each gene
-  fit <- lmFit(y, mm)
+  fit <- lmFit(y,mm)
   fit2 <- eBayes(fit)
-
+  
   ####################################
   ###Output xlsx
   ####################################
-  results <- topTable(fit2, number=10000, coef=1, sort.by="none")
+  results <- topTable(fit2, number='inf', coef=1, sort.by="none")
+  print(results)
   write_xlsx(results, output_file)
 }
-
+tic()
 for (i in 1:9){
   func(input_data_list[[i]],input_group_list[[i]],output_file_list[[i]])
 }
+toc()

@@ -1,20 +1,13 @@
 # IFN646_project
 ## Introduction
 
-The introduction of high-throughput RNA sequencing technologies has allowed researchers to understand the complex interactions between cells and the environment. 
-Gene expression analysis reveals the capacity of cells to react to external stimuli and allows for an in depth mechanistic studies that can piece together the internal signaling cascades and interactions between molecules
-These experiments would involve the quantification of a large number of short reads which are then aligned to a genome to create a count matrix of each gene or feature. 
-RNA differential expression tools apply computational models and allow the user to quickly find genes that are highly expressed or suppressed between conditions.
+The introduction of high-throughput RNA sequencing technologies has allowed researchers to understand the complex interactions between cells and the environment. Gene expression analysis reveals the capacity of cells to react to external stimuli and allows for an in depth mechanistic studies that can piece together the internal signaling cascades and interactions between molecules. These experiments would involve the quantification of a large number of short reads which are then aligned to a genome to create a count matrix of each gene or feature. RNA differential expression tools apply computational models and allow the user to quickly find genes that are highly expressed or suppressed between conditions. Gene set enrichment analysis on the differential significantly expressed genes can be then used to identify functional gene set categories.
 
 This project aims to compare tools that analyze differential gene expression using RNA sequencing count data. 
 Synthetic count matrices were generated and provided for the comparison which included two conditional groups, condition 1 and condition 2, with varying sample sizes from 3 to 9 per group and approximately ten thousand genes. 
 A separate meta file was also provided that indicated whether condition 2 genes were either upregulated, downregulated or differentially expressed compared to condition 1.
 
-Discuss tools
--Normalisation
--estimate dispersion
--differential expression
--statistics
+Differential expression tools have four basic functions. Normalisation, dispersion estimation, differential expression followed by statistical analysis.
 
 Normalisation
 
@@ -44,6 +37,7 @@ A logistic regression was trained using the output of the differential expressio
 
 RNA differential expression tools are built in the R language (version 4.2.1) and scripts were written in RStudio (version 2022.07.1 build 554). Results from these tools were analyzed in a Jupyter notebook (version 5.7.8) running Python version 3.7.3). Packages imported include DESeq2_1.36.0, edgeR_3.38.4, limma_3.52.4, writexl_1.4.0.
 
+
 ## Results
 
 Precision-Recall F-measure score
@@ -55,17 +49,26 @@ Precision-Recall F-measure score
 Figure 1. Precision-Recall F-measure scores generated from voomLimma, DESeq2 and EdgeR using synthetic count data. Each plot indicates the number of genes that are upregulated and downregulated in condition 2 compared to condition 1. Sample size varies from n = 3, 6 or 9. Each point represents a F-measure score that has been generated from adjusted p values from 
 either DESeq2 (circle), EdgeR (square) or VoomLimma (diamond).
 
+
 The F-measure score in DESeq2 and edgeR was increased in all scenarios when the sample size was increased. VoomLimma had the best f-measure score in all scenarios except for 1 and performed better when all differentially expressed genes were upregulated as opposed to when a count matrix had a mixture of upregulated and downregulated genes. DESeq2 had an advantage over EdgeR in all scenarios, especially at the lowest sample size. Sample size did not appear to affect VoomLimma. At sample size 6 and 9 the difference between DESeq2 and EdgeR were minimal. 
+
+
+Computational time
+
+![alt text](/Time.png?raw=true)
+
+Figure 2. Comparison of computational times of RNA differential expression tool DESeq2 (black bar), EdgeR (grey bar) and limma+voom (white bar) for all nine synthetic count matrices. 
+
+The computational time for the differential expression tools to analyze all nine datasets were compared. Limma+voom had the quickest computational time at approximately 7 seconds, followed by EdgeR at 26 seconds and then DESeq2 at 44 seconds.
+
 
 ## Discussion
 
-In this study, log fold change and adjust p values were used to calculate a precision-recall curve to yield F-measure scores which were used to measure the performance of RNA differential expression algorithms. VoomLimma was found to have the highest ranking F-measure score in most of the provided data sets followed by DESeq2 and EdgeR.
+In this study, we compare RNA differential expression tools DESeq2, EdgeR and limma+voom using synthetic data. Log fold change and adjust p values were used to calculate a precision-recall curve to yield F-measure scores which were used to measure the performance of the algorithms. Limma+voom was found to have the highest ranking F-measure score in most of the provided data sets followed by DESeq2 and EdgeR. 
 
-A precision-recall curve is a plot of the recall on the x axis and precision on the y axis. Precision is referred to as the positive predictive value which describes how well a model is predicting a positive class. Precision is calculated by the true positive divided by the sum of the true positives and false positive (true positive / (true positive + false negative). Recall, which is known as sensitivity, is calculated by the true positive divided by the sum of the true positive and false negative (true positive / (true positive + false negative)). The F-measure score is the harmonic mean of the precision and recall metrics and is used for calculating the accuracy of a binary classification model from the precision-recall curve.
+Our results show that there is an increase in F measure score as sample size increases. A similar study also using an imbalanced data set found a similar trend but compared differential expression tools with the Area Under Receiver Operating Characteristic Curve AUC(ROC) (Soneson & Delorenzi, 2013). AUC(ROC) is another common diagnostic tool that is used to calculate the performance of a binary classification model (Hanley JA & McNeil BJ 1982). However, studies have shown that precision-recall curves are more appropriate when there is an imbalance between each class in a dataset which applies to our dataset as there are approximately nine times more genes that are not differentially expressed (Saito T et al, 2015).  The difference between a precision-recall curve and the AUC(ROC) is that the calculations do not include the use of true negatives which comprises most of our dataset and instead analyze a model’s ability to predict the minority class.
 
-Studies have shown that precision-recall curves are more appropriate when there is an imbalance between each class in a dataset which applies to our dataset as there are approximately nine times more genes that are not differentially expressed. Area under Receiver Operating Characteristic AUC(ROC) is another common diagnostic tool that is used to calculate the performance of a binary classification model. The difference between a precision-recall curve and the AUC(ROC) is that the calculations do not include the use of true negatives which comprises most of our dataset and instead analyze a model’s ability to predict the minority class. The precision-recall plot can calculate the F-measure or F1 score which is the measure of a model’s accuracy where 1 is the highest score and 0 is the lowest.
-
-Discuss p value adjusted…
+This study found that there were notable differences in the time required for the differential expression tools to analyze all nine data sets. Limma-voom had the fastest computational time when analyzing the nine datasets followed by DESeq2 and EdgeR. A previous study by Law et al also found that limma-voom was one of the fastest statistical methods (Law CW, 2014).  
 
 
 ## References

@@ -9,7 +9,7 @@
 ########################################
 library(writexl)
 library(DESeq2)
-
+library(tictoc)
 
 output_file_list <- list(
   ('3_500_500.xlsx'),
@@ -75,7 +75,7 @@ func <- function(input_data, input_group, output_file){
   ####################################
   dds <- estimateSizeFactors(dds)
   #view normalization factor applied to each sample
-  sizeFactors(dds)
+  #sizeFactors(dds)
   
   ####################################
   ####Normalizing the data
@@ -96,10 +96,12 @@ func <- function(input_data, input_group, output_file){
   ###Output xlsx
   ####################################
   results_table <- data.frame(results_table)
+  #print(results_table)
   write_xlsx(results_table, output_file)
 }
-
+tic()
 for (i in 1:9){
   func(input_data_list[[i]],input_group_list[[i]],output_file_list[[i]])
 }
+toc()
 
