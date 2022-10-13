@@ -7,7 +7,7 @@ This project aims to compare tools that analyze differential gene expression usi
 Synthetic count matrices were generated and provided for the comparison which included two conditional groups, condition 1 and condition 2, with varying sample sizes from 3 to 9 per group and approximately ten thousand genes. 
 A separate meta file was also provided that indicated whether condition 2 genes were either upregulated, downregulated or differentially expressed compared to condition 1.
 
-Differential expression tools have four basic functions. Normalisation, dispersion estimation, differential expression followed by statistical analysis.
+Differential expression tools have four basic functions, normalisation, dispersion estimation, differential expression followed by statistical analysis.
 
 Normalisation
 
@@ -73,3 +73,9 @@ This study found that there were notable differences in the time required for th
 
 ## References
 Saito T, Rehmsmeier M. The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. PLoS One. 2015 Mar 4;10(3):e0118432. doi: 10.1371/journal.pone.0118432. PMID: 25738806; PMCID: PMC4349800.
+Law, C.W., Chen, Y., Shi, W. et al. voom: precision weights unlock linear model analysis tools for RNA-seq read counts. Genome Biol 15, R29 (2014). https://doi.org/10.1186/gb-2014-15-2-r29
+Love, M.I., Huber, W. & Anders, S. Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biol 15, 550 (2014). https://doi.org/10.1186/s13059-014-0550-8
+Mark D. Robinson, Davis J. McCarthy, Gordon K. Smyth, edgeR: a Bioconductor package for differential expression analysis of digital gene expression data, Bioinformatics, Volume 26, Issue 1, 1 January 2010, Pages 139–140, https://doi.org/10.1093/bioinformatics/btp616
+Soneson, C., Delorenzi, M. A comparison of methods for differential expression analysis of RNA-seq data. BMC Bioinformatics 14, 91 (2013). https://doi.org/10.1186/1471-2105-14-91
+Hanley JA, McNeil BJ. The meaning and use of the area under a receiver operating characteristic (ROC) curve. Radiology. 1982;143: 29–36. pmid:7063747
+
