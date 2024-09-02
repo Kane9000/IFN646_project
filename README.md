@@ -1,4 +1,4 @@
-# IFN646_project
+# Analysis of Differential Gene Expression Tools Using RNA Sequencing Count Data
 ## Introduction
 
 The introduction of high-throughput RNA sequencing technologies has allowed researchers to understand the complex interactions between cells and the environment. Gene expression analysis reveals the capacity of cells to react to external stimuli and allows for an in depth mechanistic studies that can piece together the internal signaling cascades and interactions between molecules. These experiments would involve the quantification of a large number of short reads which are then aligned to a genome to create a count matrix of each gene or feature. RNA differential expression tools apply computational models and allow the user to quickly find genes that are highly expressed or suppressed between conditions. Gene set enrichment analysis on the differential significantly expressed genes can be then used to identify functional gene set categories.
